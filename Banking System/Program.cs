@@ -44,10 +44,6 @@ namespace Banking_System
                 ShouldContinue = Console.ReadLine();
 
             } while (ShouldContinue != "no");
-
-
-
-
         }
 
         static string ShowMenu()
@@ -64,6 +60,5 @@ namespace Banking_System
 
             return Console.ReadLine().Trim();
         }
-    }
-    }
+    }  
 }
