@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Banking_System.Models;
+using System;
 
 namespace Banking_System
 {
@@ -6,6 +7,8 @@ namespace Banking_System
     {
         static void Main(string[] args)
         {
+            var bank = new Bank();
+
             var ShouldContinue = "";
             do
             {
@@ -14,7 +17,8 @@ namespace Banking_System
                 switch (userInput)
                 {
                     case "1":
-                        Console.WriteLine("Create new account is in proces");
+                        var account = CreateAccount();
+                        bank.AddAccount(account);
                         break;
                     case "2":
                         Console.WriteLine("View all accounts is in proces");
@@ -59,6 +63,21 @@ namespace Banking_System
             Console.WriteLine("7.Get all transaction amount");
 
             return Console.ReadLine().Trim();
+        }
+
+        static Account CreateAccount()
+        {
+            var newAccount =  new Account();
+            Console.WriteLine("Please enter account number");
+            newAccount.AccountNumber = Console.ReadLine();
+            Console.WriteLine("Please enter you name");
+            newAccount.Name = Console.ReadLine();
+            Console.WriteLine("Please enter your surname");
+            newAccount.Surname = Console.ReadLine();
+            Console.WriteLine("Please enter your balance ");
+            newAccount.InscreaseBalance(decimal.Parse(Console.ReadLine()));
+            
+            return newAccount;
         }
     }  
 }
