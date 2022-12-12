@@ -27,7 +27,7 @@ namespace Banking_System
                         Console.WriteLine("View account is in proces");
                         break;
                     case "4":
-                        Console.WriteLine("Create transaction is in proces");
+                        bank.CreateTransaction();
                         break;
                     case "5":
                         Console.WriteLine("View all transaction is in proces");
