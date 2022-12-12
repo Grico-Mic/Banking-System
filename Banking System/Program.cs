@@ -1,4 +1,4 @@
-﻿using Banking_System.Models;
+﻿using Banking_System.Servises;
 using System;
 
 namespace Banking_System
@@ -7,9 +7,9 @@ namespace Banking_System
     {
         static void Main(string[] args)
         {
-            var bank = new Bank();
+            var bank = new BankServise();
 
-            var ShouldContinue = "";
+            var ShouldContinue = ""; 
             do
             {
                 var userInput = ShowMenu();
@@ -17,8 +17,8 @@ namespace Banking_System
                 switch (userInput)
                 {
                     case "1":
-                        var account = CreateAccount();
-                        bank.AddAccount(account);
+                        bank.CreateAccount();
+                       
                         break;
                     case "2":
                         Console.WriteLine("View all accounts is in proces");
@@ -33,10 +33,14 @@ namespace Banking_System
                         Console.WriteLine("View all transaction is in proces");
                         break;
                     case "6":
-                        Console.WriteLine("Get provision revenue is in proces");
+                        var provisionRevenue = bank.TotalProvisionRevenue();
+                        Console.WriteLine("Get provision revenue");
+                        Console.WriteLine($"Total provision recenue is {provisionRevenue}");
                         break;
                     case "7":
-                        Console.WriteLine("Get all transaction amount is in proces");
+                        var totalAmount = bank.TotalTransactionAmmount();
+                        Console.WriteLine("Get all transactions");
+                        Console.WriteLine($"Transaction transactions amount is {totalAmount}");
                         break;
 
                     default:
@@ -65,19 +69,6 @@ namespace Banking_System
             return Console.ReadLine().Trim();
         }
 
-        static Account CreateAccount()
-        {
-            var newAccount =  new Account();
-            Console.WriteLine("Please enter account number");
-            newAccount.AccountNumber = Console.ReadLine();
-            Console.WriteLine("Please enter you name");
-            newAccount.Name = Console.ReadLine();
-            Console.WriteLine("Please enter your surname");
-            newAccount.Surname = Console.ReadLine();
-            Console.WriteLine("Please enter your balance ");
-            newAccount.InscreaseBalance(decimal.Parse(Console.ReadLine()));
-            
-            return newAccount;
-        }
+        
     }  
 }
