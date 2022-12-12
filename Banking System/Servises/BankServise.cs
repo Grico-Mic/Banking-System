@@ -45,6 +45,50 @@ namespace Banking_System.Servises
             newArray[newArray.Length - 1] = account;
             Accounts = newArray;
         }
+        public void CreateTransaction()
+        {
+            //get account from
+            Console.WriteLine("Enter account number");
+            var accountFromNumber = Console.ReadLine();
+            var firsAccountNumber = GetAccounByNumber(accountFromNumber);
+            //get account to
+            Console.WriteLine("Enter account number");
+            var accountToNumber = Console.ReadLine();
+            var secondAccount = GetAccounByNumber(accountToNumber);
+            //get ammount
+            Console.WriteLine("Enter the ammount transfer");
+            var transferAmount = decimal.Parse(Console.ReadLine());
+
+            //decrease amount from first account
+            var provision = transferAmount * 0.03m;
+            firsAccountNumber.DecreaseBalance(transferAmount + provision);
+
+            //inscrease amount to second account
+            secondAccount.InscreaseBalance(transferAmount);
+
+            var transaction = new Transaction();
+            transaction.AccountNumberFrom = accountFromNumber;
+            transaction.AccountNumberTo = accountToNumber;
+            transaction.Amount = transferAmount;
+            transaction.Provision = provision;
+            transaction.EntryDate = DateTime.Now;
+
+            AddTransaction(transaction);
+        }
+
+        private Account GetAccounByNumber( string accountNumber)
+        {
+           
+            Account firstAccount = null;
+            foreach (var account in Accounts)
+            {
+                if (account.AccountNumber == accountNumber)
+                {
+                    firstAccount = account;
+                }
+            }
+            return firstAccount;
+        }
         public void CreateAccount()
         {
             var newAccount = new Account();
@@ -60,5 +104,16 @@ namespace Banking_System.Servises
             AddAccount(newAccount);
         }
 
+        private void AddTransaction(Transaction transaction)
+        {
+            // Accounts[0] = account;
+            var newArray = new Transaction[Transactions.Length + 1];
+            for (int i = 0; i < Transactions.Length; i++)
+            {
+                newArray[i] = Transactions[i];
+            }
+            newArray[newArray.Length - 1] = transaction;
+            Transactions= newArray;
+        }
     }
 }
