@@ -1,18 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using Banking_System.Models;
 
-namespace Banking_System.Models
+
+namespace Banking_System.Servises
 {
-   public class Bank
+    public class BankServise
     {
-        public Bank()
+        public BankServise()
         {
             Accounts = new Account[0];
             Transactions = new Transaction[0];
         }
-        public Account[] Accounts { get; set; }
-        public Transaction[] Transactions { get; set; }
+        private Account[] Accounts { get; set; }
+        private Transaction[] Transactions { get; set; }
 
          public decimal TotalProvisionRevenue()
         {
@@ -34,7 +34,7 @@ namespace Banking_System.Models
             }
             return sum;
         }
-        public void AddAccount(Account account)
+        private void AddAccount(Account account)
         {
             // Accounts[0] = account;
             var newArray = new Account[Accounts.Length +1];
@@ -44,6 +44,20 @@ namespace Banking_System.Models
             }
             newArray[newArray.Length - 1] = account;
             Accounts = newArray;
+        }
+        public void CreateAccount()
+        {
+            var newAccount = new Account();
+            Console.WriteLine("Please enter account number");
+            newAccount.AccountNumber = Console.ReadLine();
+            Console.WriteLine("Please enter you name");
+            newAccount.Name = Console.ReadLine();
+            Console.WriteLine("Please enter your surname");
+            newAccount.Surname = Console.ReadLine();
+            Console.WriteLine("Please enter your balance ");
+            newAccount.InscreaseBalance(decimal.Parse(Console.ReadLine()));
+
+            AddAccount(newAccount);
         }
 
     }
