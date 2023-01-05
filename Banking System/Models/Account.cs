@@ -33,5 +33,12 @@ namespace Banking_System.Models
                 Balance -= amount;
             }
         }
+
+        public void Print()
+        {
+            Console.WriteLine($"Account Number is {AccountNumber}");
+            Console.WriteLine($"Holder Name is {Name} {Surname}");
+            Console.WriteLine($"Current balance is {Balance}");
+        }
     }
 }

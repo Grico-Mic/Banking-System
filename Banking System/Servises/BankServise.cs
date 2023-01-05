@@ -1,6 +1,6 @@
 ﻿using System;
 using Banking_System.Models;
-
+using System.Collections.Generic;
 
 namespace Banking_System.Servises
 {
@@ -22,6 +22,13 @@ namespace Banking_System.Servises
                 sum += transactions.Provision;
             }
             return sum;
+        }
+        public void ViewAllAccounts()
+        {
+            foreach (var account in Accounts)
+            {
+                account.Print();
+            }
         }
     
         
