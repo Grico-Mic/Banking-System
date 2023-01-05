@@ -9,5 +9,13 @@ namespace Banking_System.Models
         public decimal Amount { get; set; }
         public decimal Provision { get; set; }
         public DateTime EntryDate { get; set; }
+
+        public void Print()
+        {
+            Console.WriteLine($"Account from: {AccountNumberFrom}");
+            Console.WriteLine($"Account to: {AccountNumberTo}");
+            Console.WriteLine($"Amount: {Amount}");
+            Console.WriteLine($"Provision: {Provision}");
+        }
     }
 }
