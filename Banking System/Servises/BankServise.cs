@@ -8,11 +8,11 @@ namespace Banking_System.Servises
     {
         public BankServise()
         {
-            Accounts = new Account[0];
-            Transactions = new Transaction[0];
+            Accounts = new List<Account>();
+            Transactions = new List<Transaction>();
         }
-        private Account[] Accounts { get; set; }
-        private Transaction[] Transactions { get; set; }
+        private List<Account> Accounts { get; set; }
+        private List<Transaction> Transactions { get; set; }
 
          public decimal TotalProvisionRevenue()
         {
@@ -30,6 +30,14 @@ namespace Banking_System.Servises
                 account.Print();
             }
         }
+
+        public void ViewAllTransactions()
+        {
+            foreach (var account in Accounts)
+            {
+                account.Print();
+            }
+        }
     
         
         public decimal TotalTransactionAmmount()
@@ -41,17 +49,17 @@ namespace Banking_System.Servises
             }
             return sum;
         }
-        private void AddAccount(Account account)
-        {
-            // Accounts[0] = account;
-            var newArray = new Account[Accounts.Length +1];
-            for (int i = 0; i < Accounts.Length; i++)
-            {
-                newArray[i] = Accounts[i];
-            }
-            newArray[newArray.Length - 1] = account;
-            Accounts = newArray;
-        }
+        //private void AddAccount(Account account)
+        //{
+        //    // Accounts[0] = account;
+        //    var newArray = new Account[Accounts.Length +1];
+        //    for (int i = 0; i < Accounts.Length; i++)
+        //    {
+        //        newArray[i] = Accounts[i];
+        //    }
+        //    newArray[newArray.Length - 1] = account;
+        //    Accounts = newArray;
+        //}
         public void CreateTransaction()
         {
             //get account from
@@ -92,6 +100,7 @@ namespace Banking_System.Servises
                 if (account.AccountNumber == accountNumber)
                 {
                     firstAccount = account;
+                    break;
                 }
             }
             return firstAccount;
@@ -108,19 +117,22 @@ namespace Banking_System.Servises
             Console.WriteLine("Please enter your balance ");
             newAccount.InscreaseBalance(decimal.Parse(Console.ReadLine()));
 
-            AddAccount(newAccount);
+            Accounts.Add(newAccount);
         }
 
         private void AddTransaction(Transaction transaction)
         {
-            // Accounts[0] = account;
-            var newArray = new Transaction[Transactions.Length + 1];
-            for (int i = 0; i < Transactions.Length; i++)
-            {
-                newArray[i] = Transactions[i];
-            }
-            newArray[newArray.Length - 1] = transaction;
-            Transactions= newArray;
+
+            Transactions.Add(transaction);
+
+            //// Accounts[0] = account;
+            //var newArray = new Transaction[Transactions.Length + 1];
+            //for (int i = 0; i < Transactions.Length; i++)
+            //{
+            //    newArray[i] = Transactions[i];
+            //}
+            //newArray[newArray.Length - 1] = transaction;
+            //Transactions= newArray;
         }
     }
 }
