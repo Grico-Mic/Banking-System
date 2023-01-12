@@ -21,16 +21,16 @@ namespace Banking_System
                        
                         break;
                     case "2":
-                        Console.WriteLine("View all accounts is in proces");
+                        bank.ViewAllAccounts();
                         break;
                     case "3":
-                        Console.WriteLine("View account is in proces");
+                        bank.ViewAccount();
                         break;
                     case "4":
                         bank.CreateTransaction();
                         break;
                     case "5":
-                        Console.WriteLine("View all transaction is in proces");
+                        bank.ViewAllAccounts();
                         break;
                     case "6":
                         var provisionRevenue = bank.TotalProvisionRevenue();
