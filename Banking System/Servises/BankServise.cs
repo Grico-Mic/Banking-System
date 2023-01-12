@@ -1,6 +1,7 @@
 ﻿using System;
 using Banking_System.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Banking_System.Servises
 {
@@ -14,40 +15,68 @@ namespace Banking_System.Servises
         private List<Account> Accounts { get; set; }
         private List<Transaction> Transactions { get; set; }
 
-         public decimal TotalProvisionRevenue()
+        public decimal TotalProvisionRevenue()
         {
-            var sum = 0.0m;
-            foreach (var transactions in Transactions)
-            {
-                sum += transactions.Provision;
-            }
-            return sum;
+            return Transactions.Sum(x => x.Provision);
+
+            //var sum = 0.0m;
+            //foreach (var transactions in Transactions)
+            //{
+            //    sum += transactions.Provision;
+            //}
+            //return sum;
         }
         public void ViewAllAccounts()
         {
-            foreach (var account in Accounts)
-            {
-                account.Print();
-            }
+            Accounts.ForEach(x => x.Print());
+
+            //foreach (var account in Accounts)
+            //{
+            //    account.Print();
+            //}
         }
+
+        public void ViewAccount()
+        {
+            Console.WriteLine("Please write your account");
+            var accountNumber = Console.ReadLine();
+            var account = GetAccounByNumber(accountNumber);
+            //var accountTransactions = GetAccounByNumber(accountNumber);
+
+            //if (account == null)
+            //{
+            //    Console.WriteLine("account does not exist");
+            //    return;
+            //}
+
+            //account.Print();
+            var accountTransactions = GetTransactionForAccount(accountNumber);
+
+
+            accountTransactions.ForEach(x => x.Print());
+        }
+
+       
 
         public void ViewAllTransactions()
         {
-            foreach (var account in Accounts)
-            {
-                account.Print();
-            }
+            Transactions.ForEach(x => x.Print());
+            //foreach (var account in Accounts)
+            //{
+            //    account.Print();
+            //}
         }
     
         
         public decimal TotalTransactionAmmount()
         {
-            var sum = 0.0m;
-            foreach (var transactions in Transactions)
-            {
-                sum += transactions.Amount;
-            }
-            return sum;
+            return Transactions.Sum(x => x.Amount);
+            //var sum = 0.0m;
+            //foreach (var transactions in Transactions)
+            //{
+            //    sum += transactions.Amount;
+            //}
+            //return sum;
         }
         //private void AddAccount(Account account)
         //{
@@ -91,34 +120,56 @@ namespace Banking_System.Servises
             AddTransaction(transaction);
         }
 
-        private Account GetAccounByNumber( string accountNumber)
-        {
-           
-            Account firstAccount = null;
-            foreach (var account in Accounts)
-            {
-                if (account.AccountNumber == accountNumber)
-                {
-                    firstAccount = account;
-                    break;
-                }
-            }
-            return firstAccount;
-        }
         public void CreateAccount()
         {
-            var newAccount = new Account();
             Console.WriteLine("Please enter account number");
-            newAccount.AccountNumber = Console.ReadLine();
-            Console.WriteLine("Please enter you name");
-            newAccount.Name = Console.ReadLine();
-            Console.WriteLine("Please enter your surname");
-            newAccount.Surname = Console.ReadLine();
-            Console.WriteLine("Please enter your balance ");
-            newAccount.InscreaseBalance(decimal.Parse(Console.ReadLine()));
+            var inputAccountNumber = Console.ReadLine();
 
-            Accounts.Add(newAccount);
+            var account = GetAccounByNumber(inputAccountNumber);
+
+            if(account == null)
+            {
+                var newAccount = new Account();
+                Console.WriteLine("Please enter account number");
+                newAccount.AccountNumber = Console.ReadLine();
+                Console.WriteLine("Please enter you name");
+                newAccount.Name = Console.ReadLine();
+                Console.WriteLine("Please enter your surname");
+                newAccount.Surname = Console.ReadLine();
+                Console.WriteLine("Please enter your balance ");
+                newAccount.InscreaseBalance(decimal.Parse(Console.ReadLine()));
+
+                Accounts.Add(newAccount);
+            }else
+            {
+                Console.WriteLine($"Account with number {inputAccountNumber} already exist");
+            }
+
+            
         }
+
+        private List<Transaction> GetTransactionForAccount(string accountNumber)
+        {
+            return Transactions
+                .Where(x => x.AccountNumberFrom == accountNumber || x.AccountNumberTo == accountNumber)
+                .ToList();
+        }
+        private Account GetAccounByNumber( string accountNumber)
+        {
+            return Accounts.FirstOrDefault(x => x.AccountNumber == accountNumber);
+
+            //Account firstAccount = null;
+            //foreach (var account in Accounts)
+            //{
+            //    if (account.AccountNumber == accountNumber)
+            //    {
+            //        firstAccount = account;
+            //        break;
+            //    }
+            //}
+            //return firstAccount;
+        }
+        
 
         private void AddTransaction(Transaction transaction)
         {
