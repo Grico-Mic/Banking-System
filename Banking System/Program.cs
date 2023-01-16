@@ -12,40 +12,50 @@ namespace Banking_System
             var ShouldContinue = ""; 
             do
             {
-                var userInput = ShowMenu();
-
-                switch (userInput)
+                try
                 {
-                    case "1":
-                        bank.CreateAccount();
-                       
-                        break;
-                    case "2":
-                        bank.ViewAllAccounts();
-                        break;
-                    case "3":
-                        bank.ViewAccount();
-                        break;
-                    case "4":
-                        bank.CreateTransaction();
-                        break;
-                    case "5":
-                        bank.ViewAllAccounts();
-                        break;
-                    case "6":
-                        var provisionRevenue = bank.TotalProvisionRevenue();
-                        Console.WriteLine("Get provision revenue");
-                        Console.WriteLine($"Total provision recenue is {provisionRevenue}");
-                        break;
-                    case "7":
-                        var totalAmount = bank.TotalTransactionAmmount();
-                        Console.WriteLine("Get all transactions");
-                        Console.WriteLine($"Transaction transactions amount is {totalAmount}");
-                        break;
+                    var userInput = ShowMenu();
 
-                    default:
-                        Console.WriteLine("Wrong Input");
-                        break;
+                    switch (userInput)
+                    {
+                        case "1":
+                            bank.CreateAccount();
+
+                            break;
+                        case "2":
+                            bank.ViewAllAccounts();
+                            break;
+                        case "3":
+                            bank.ViewAccount();
+                            break;
+                        case "4":
+                            bank.CreateTransaction();
+                            break;
+                        case "5":
+                            bank.ViewAllAccounts();
+                            break;
+                        case "6":
+                            var provisionRevenue = bank.TotalProvisionRevenue();
+                            Console.WriteLine("Get provision revenue");
+                            Console.WriteLine($"Total provision recenue is {provisionRevenue}");
+                            break;
+                        case "7":
+                            var totalAmount = bank.TotalTransactionAmmount();
+                            Console.WriteLine("Get all transactions");
+                            Console.WriteLine($"Transaction transactions amount is {totalAmount}");
+                            break;
+
+                        default:
+                            Console.WriteLine("Wrong Input");
+                            break;
+                    }
+                }
+                
+                
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Something went wrong");
+                    Console.WriteLine("Please try again later");
                 }
                 Console.WriteLine("Would you like to continue?Enter NO for exit");
 
