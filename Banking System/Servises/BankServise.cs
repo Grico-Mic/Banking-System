@@ -2,6 +2,7 @@
 using Banking_System.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Banking_System.Exceptions;
 
 namespace Banking_System.Servises
 {
@@ -94,18 +95,34 @@ namespace Banking_System.Servises
             //get account from
             Console.WriteLine("Enter account number");
             var accountFromNumber = Console.ReadLine();
-            var firsAccountNumber = GetAccounByNumber(accountFromNumber);
+            var firstAccountNumber = GetAccounByNumber(accountFromNumber);
+
+            if (firstAccountNumber == null)
+            {
+                throw new BankingSystemExceptions($"Account with number {accountFromNumber} does not exits");
+            }
+
             //get account to
             Console.WriteLine("Enter account number");
             var accountToNumber = Console.ReadLine();
             var secondAccount = GetAccounByNumber(accountToNumber);
+
+            if (secondAccount == null)
+            {
+                throw new BankingSystemExceptions($"Account with number {accountToNumber} does not exits");
+            }
             //get ammount
             Console.WriteLine("Enter the ammount transfer");
             var transferAmount = decimal.Parse(Console.ReadLine());
 
+            if (transferAmount < 0)
+            {
+                throw new BankingSystemExceptions("Invalid input. Amount can not be negative number");
+            }
+
             //decrease amount from first account
             var provision = transferAmount * 0.03m;
-            firsAccountNumber.DecreaseBalance(transferAmount + provision);
+            firstAccountNumber.DecreaseBalance(transferAmount + provision);
 
             //inscrease amount to second account
             secondAccount.InscreaseBalance(transferAmount);
@@ -127,25 +144,37 @@ namespace Banking_System.Servises
 
             var account = GetAccounByNumber(inputAccountNumber);
 
-            if(account == null)
+            if(account != null)
             {
-                var newAccount = new Account();
-                Console.WriteLine("Please enter account number");
-                newAccount.AccountNumber = Console.ReadLine();
-                Console.WriteLine("Please enter you name");
-                newAccount.Name = Console.ReadLine();
-                Console.WriteLine("Please enter your surname");
-                newAccount.Surname = Console.ReadLine();
-                Console.WriteLine("Please enter your balance ");
-                newAccount.InscreaseBalance(decimal.Parse(Console.ReadLine()));
-
-                Accounts.Add(newAccount);
-            }else
-            {
-                Console.WriteLine($"Account with number {inputAccountNumber} already exist");
+               throw new BankingSystemExceptions ($"Account with number {inputAccountNumber} already exist");
             }
+            
+
+            var newAccount = new Account();
+            newAccount.AccountNumber = inputAccountNumber;
+            Console.WriteLine("Please enter you name");
+            var name = Console.ReadLine();
+            Console.WriteLine("Please enter your surname");
+            var surname = Console.ReadLine();
+            Console.WriteLine("Please enter your balance ");
+            var balance = Console.ReadLine();
+
+            ValidateAccountsDetails(name, surname, balance);
+            newAccount.Name = name;
+            newAccount.Surname = surname;
+            newAccount.InscreaseBalance(decimal.Parse(balance));
+
 
             
+            Accounts.Add(newAccount);
+        }
+
+        private void ValidateAccountsDetails(string name, string surname, string balance)
+        {
+            if (name.Trim() == "")
+            {
+                throw new BankingSystemExceptions($"Name: {name} invalid");
+            }
         }
 
         private List<Transaction> GetTransactionForAccount(string accountNumber)
