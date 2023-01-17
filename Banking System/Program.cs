@@ -1,4 +1,5 @@
-﻿using Banking_System.Servises;
+﻿using Banking_System.Exceptions;
+using Banking_System.Servises;
 using System;
 
 namespace Banking_System
@@ -50,9 +51,12 @@ namespace Banking_System
                             break;
                     }
                 }
-                
-                
-                catch (Exception ex)
+                catch (BankingSystemExceptions ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+                catch (Exception)
                 {
                     Console.WriteLine("Something went wrong");
                     Console.WriteLine("Please try again later");
