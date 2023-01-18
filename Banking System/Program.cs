@@ -1,6 +1,7 @@
 ﻿using Banking_System.Exceptions;
 using Banking_System.Servises;
 using System;
+using System.IO;
 
 namespace Banking_System
 {
@@ -53,11 +54,14 @@ namespace Banking_System
                 }
                 catch (BankingSystemExceptions ex)
                 {
+                    File.AppendAllTextAsync("BankingSystemExceptionsLogs.txt", $"{DateTime.Now}: Message: {ex.Message}. Stacktrace: {ex.StackTrace}");
                     Console.WriteLine(ex.Message);
                 }
 
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    File.AppendAllTextAsync("Logs.txt", $"{DateTime.Now}: Message: {ex.Message}. Stacktrace: {ex.StackTrace}");
+                    
                     Console.WriteLine("Something went wrong");
                     Console.WriteLine("Please try again later");
                 }
