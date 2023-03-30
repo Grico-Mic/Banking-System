@@ -1,13 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>Banking_System</RootNamespace>
+    <RootNamespace>Banking_System.Servises</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Banking System.Servises\BankingSystem.Servises.csproj" />
+    <ProjectReference Include="..\Banking System.Models\BankingSystem.Models.csproj" />
     <ProjectReference Include="..\BankingSystem.Common\BankingSystem.Common.csproj" />
   </ItemGroup>
 
